@@ -1,0 +1,24 @@
+[project]
+name = "automation"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "beautifulsoup4>=4.14.3",
+    "fastapi>=0.136.3",
+    "google-genai>=2.7.0",
+    "google-generativeai>=0.8.6",
+    "httpx>=0.28.1",
+    "loguru>=0.7.3",
+    "lxml>=6.1.1",
+    "numpy>=2.4.6",
+    "playwright>=1.60.0",
+    "psycopg2-binary>=2.9.12",
+    "pydantic>=2.13.4",
+    "python-dotenv>=1.2.2",
+    "redis>=8.0.0",
+    "requests>=2.34.2",
+    "sqlalchemy>=2.0.50",
+    "uvicorn>=0.48.0",
+]
