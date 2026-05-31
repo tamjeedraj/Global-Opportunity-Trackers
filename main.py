@@ -333,27 +333,83 @@ def root():
     return {"message": "Backend is running"}
 
 
+# @app.get("/api/opportunities")
+# def api_opportunities(db: Session = Depends(get_db)):
+#     opportunities = db.query(Opportunity).all()
+#     result = []
+#     for opp in opportunities:
+#         result.append({
+#             "id": opp.id,
+#             "title": opp.title,
+#             "description": opp.description,
+#             "country": getattr(opp, "country", "Unknown"),
+#             "deadline": getattr(opp, "deadline", "N/A"),
+#             "status": getattr(opp, "status", "N/A")
+#         })
+#     return result
+
 @app.get("/api/opportunities")
 def api_opportunities(db: Session = Depends(get_db)):
     opportunities = db.query(Opportunity).all()
     result = []
-    for opp in opportunities:
-        result.append({
-            "id": opp.id,
-            "title": opp.title,
-            "description": opp.description,
-            "country": getattr(opp, "country", "Unknown"),
-            "deadline": getattr(opp, "deadline", "N/A"),
-            "status": getattr(opp, "status", "N/A")
-        })
-    return result
 
+    if opportunities:  # ✅ अगर DB में data है
+        for opp in opportunities:
+            result.append({
+                "id": opp.id,
+                "title": opp.title,
+                "description": opp.description,
+                "country": getattr(opp, "country", "Unknown"),
+                "deadline": getattr(opp, "deadline", "N/A"),
+                "status": getattr(opp, "status", "N/A")
+            })
+    else:  # ✅ fallback static data
+        result = [
+            {
+                "id": 1,
+                "title": "EU Startup Accelerator",
+                "organization": "European Commission",
+                "deadline": "2024-05-25",
+                "tags": ["AI", "Startup"],
+                "status": "Saved"
+            },
+            {
+                "id": 2,
+                "title": "Women Entrepreneurs Grant",
+                "organization": "Female Founders Initiative",
+                "deadline": "2024-06-10",
+                "tags": ["Women", "Funding"],
+                "status": "Applied"
+            },
+            {
+                "id": 3,
+                "title": "Africa Tech Challenge",
+                "organization": "Tech for Africa",
+                "deadline": "2024-05-30",
+                "tags": ["Africa", "Innovation"],
+                "status": "Planning"
+            }
+        ]
+
+    return result
 
 @app.get("/api/recommendations")
 def api_recommendations():
-    # फिलहाल static data, बाद में AI से dynamic कर सकते हो
+    # ✅ Combined static + upcoming recommendations
     return [
         {"title": "UNESCO Youth Fellowship"},
         {"title": "Google AI Startup Program"},
         {"title": "Women Techmakers Scholarship"},
+        {"title": "AI Innovation Fund – Due in 3 Days"},
+        {"title": "Global Youth Challenge – Due in 5 Days"}
     ]
+
+
+# @app.get("/api/recommendations")
+# def api_recommendations():
+#     # फिलहाल static data, बाद में AI से dynamic कर सकते हो
+#     return [
+#         {"title": "UNESCO Youth Fellowship"},
+#         {"title": "Google AI Startup Program"},
+#         {"title": "Women Techmakers Scholarship"},
+#     ]
